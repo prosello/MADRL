@@ -214,8 +214,8 @@ class RLToolsRunner(object):
 
     def __call__(self):
         with tf.Session() as sess:
-            sess.run(tf.initialize_all_variables())
-            summary_writer = tf.train.SummaryWriter(self.args.tblog, graph=sess.graph)
+            sess.run(tf.global_variables_initializer())
+            summary_writer = tf.summary.FileWriter(self.args.tblog, graph=sess.graph)
             self.algo.train(sess, self.log_f, self.args.save_freq, blend_freq=self.args.blend_freq,
                             keep_kmax=self.args.keep_kmax,
                             blend_eval_trajs=self.args.blend_eval_trajs)

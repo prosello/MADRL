@@ -96,7 +96,7 @@ def main():
 
 
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+        sess.run(tf.global_variables_initializer())
         policy.load_h5(sess, filename, file_key)
         if train_args['control'] == 'centralized':
             act_fn = lambda o: policy.sample_actions(np.expand_dims(np.array(o).flatten(),0), deterministic=args.deterministic)[0][0,0]

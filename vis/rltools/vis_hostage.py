@@ -79,7 +79,7 @@ def main():
                                varscope_name='gaussmlp_policy')
 
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+        sess.run(tf.global_variables_initializer())
         policy.load_h5(sess, filename, file_key)
 
         rew = env.animate(

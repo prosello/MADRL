@@ -190,7 +190,7 @@ def main():
     log_f = rltools.log.TrainingLog(args.log, [('args', argstr)], debug=args.debug)
 
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+        sess.run(tf.global_variables_initializer())
         if args.load_checkpoint is not '':
             policy.load_h5(sess, filename, file_key) 
         popt.train(sess, log_f, args.save_freq)

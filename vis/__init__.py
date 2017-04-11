@@ -82,7 +82,7 @@ class Evaluator(PolicyLoad):
             same_con_pol = kwargs.pop('same_con_pol', None)
             assert file_key
             with tf.Session() as sess:
-                sess.run(tf.initialize_all_variables())
+                sess.run(tf.global_variables_initializer())
 
                 if self.control == 'concurrent':
                     if same_con_pol:
@@ -132,7 +132,7 @@ class Visualizer(PolicyLoad):
             same_con_pol = kwargs.pop('same_con_pol', None)
             assert file_key
             with tf.Session() as sess:
-                sess.run(tf.initialize_all_variables())
+                sess.run(tf.global_variables_initializer())
                 if self.control == 'concurrent':
                     if same_con_pol:
                         rpolicy = [self.policy] * len(self.env.agents)

@@ -28,7 +28,7 @@ class FactoredCategorical(Distribution):
 
     def kl_expr(self, logprobs1_B_N_A, logprobs2_B_N_A, name=None):
         """KL divergence between facotored categorical distributions"""
-        with tf.op_scope([logprobs1_B_N_A, logprobs2_B_N_A], name, 'fac_categorical_kl') as scope:
+        with tf.name_scope(values=[logprobs1_B_N_A, logprobs2_B_N_A], name=name, default_name='fac_categorical_kl') as scope:
             kl_B = tf.reduce_sum(
                 tf.reduce_sum(
                     tf.exp(logprobs1_B_N_A) * (logprobs1_B_N_A - logprobs2_B_N_A), 2), 1,
@@ -55,7 +55,7 @@ class PursuitCentralMLPPolicy(StochasticPolicy):
             net = nn.FeedforwardNet(obsfeat_B_Df, self.obsfeat_space.shape, self.hidden_spec)
         with tf.variable_scope('out'):
             out_layer = nn.AffineLayer(net.output, net.output_shape, (self.action_space.n,),
-                                       initializer=tf.zeros_initializer)
+                                       initializer=tf.zeros_initializer())
 
         scores_B_NPa = out_layer.output
         scores_B_N_Pa = tf.reshape(scores_B_NPa,
